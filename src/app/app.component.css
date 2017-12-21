@@ -1,0 +1,13 @@
+.container {
+  display: flex;
+}
+
+.art-object-list {
+  width: 30%;
+  padding: 10px;
+}
+
+.art-object-details {
+  width: 70%;
+  padding: 10px;
+}

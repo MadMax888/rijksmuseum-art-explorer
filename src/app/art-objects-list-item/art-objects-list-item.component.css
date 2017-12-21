@@ -1,0 +1,14 @@
+.art-objects-list-item {
+  padding: 10px;
+  margin-bottom: 5px;
+  border: 1px solid #222;
+  cursor: pointer;
+}
+
+.art-objects-list-item:hover {
+  background-color: #eee;
+}
+
+.art-objects-list-item.is-selected {
+  background-color: #ddd;
+}
