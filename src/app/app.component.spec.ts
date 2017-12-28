@@ -3,19 +3,19 @@ import { of as observableOf } from 'rxjs/observable/of';
 
 describe('AppComponent', () => {
   let appComponent;
-  let rijksmuseumApiServiceMock;
-  let getAllResponseMock;
+  let rijksmuseumApiService;
+  let getAllResponse;
 
   beforeEach(() => {
-    rijksmuseumApiServiceMock = jasmine.createSpyObj('rijksmuseumApiService', [
+    rijksmuseumApiService = jasmine.createSpyObj('rijksmuseumApiService', [
       'getAll'
     ]);
-    getAllResponseMock = {
-      artObjects: 'artObjectsMock'
+    getAllResponse = {
+      artObjects: 'artObjects'
     };
-    rijksmuseumApiServiceMock.getAll.and.returnValue(observableOf(getAllResponseMock));
+    rijksmuseumApiService.getAll.and.returnValue(observableOf(getAllResponse));
 
-    appComponent = new AppComponent(rijksmuseumApiServiceMock);
+    appComponent = new AppComponent(rijksmuseumApiService);
   });
 
   describe('#ngOnInit', () => {
@@ -24,11 +24,11 @@ describe('AppComponent', () => {
     });
 
     it('should call getAll on rijksmuseumApiService with empty search query', () => {
-      expect(rijksmuseumApiServiceMock.getAll).toHaveBeenCalledWith('');
+      expect(rijksmuseumApiService.getAll).toHaveBeenCalledWith('');
     });
 
     it('should store artObjects from response', () => {
-      expect(appComponent.artObjects).toBe(getAllResponseMock.artObjects);
+      expect(appComponent.artObjects).toBe(getAllResponse.artObjects);
     });
   });
 
@@ -48,11 +48,11 @@ describe('AppComponent', () => {
     });
 
     it('should call getAll on rijksmuseumApiService with passed search query', () => {
-      expect(rijksmuseumApiServiceMock.getAll).toHaveBeenCalledWith(searchQuery);
+      expect(rijksmuseumApiService.getAll).toHaveBeenCalledWith(searchQuery);
     });
 
     it('should store artObjects from response', () => {
-      expect(appComponent.artObjects).toBe(getAllResponseMock.artObjects);
+      expect(appComponent.artObjects).toBe(getAllResponse.artObjects);
     });
   });
 });
