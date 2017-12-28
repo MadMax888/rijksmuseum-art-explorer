@@ -1,19 +1,21 @@
 import { AppComponent } from './app.component';
 import { of as observableOf } from 'rxjs/observable/of';
+import { Subject } from 'rxjs/Subject';
 
 describe('AppComponent', () => {
   let appComponent;
   let rijksmuseumApiService;
   let getAllResponse;
+  let getDetailsResponse;
 
   beforeEach(() => {
-    rijksmuseumApiService = jasmine.createSpyObj('rijksmuseumApiService', [
-      'getAll'
-    ]);
-    getAllResponse = {
-      artObjects: 'artObjects'
-    };
-    rijksmuseumApiService.getAll.and.returnValue(observableOf(getAllResponse));
+    getAllResponse = { artObjects: 'artObjects' };
+    getDetailsResponse = { artObject: 'artObjectDetails' };
+
+    rijksmuseumApiService = jasmine.createSpyObj('rijksmuseumApiService', {
+      getAll: observableOf(getAllResponse),
+      getDetails: observableOf(getDetailsResponse)
+    });
 
     appComponent = new AppComponent(rijksmuseumApiService);
   });
@@ -53,6 +55,30 @@ describe('AppComponent', () => {
 
     it('should store artObjects from response', () => {
       expect(appComponent.artObjects).toBe(getAllResponse.artObjects);
+    });
+  });
+
+  describe('#selectArtObject', () => {
+    let artObjectToSelect;
+
+    beforeEach(() => {
+      artObjectToSelect = {
+        objectNumber: 'ABC-42'
+      };
+      appComponent.selectedArtObjectDetails = 'previouslySelectedArtObjectDetails';
+      appComponent.selectArtObject(artObjectToSelect);
+    });
+
+    it('should store object number of selected art object', () => {
+      expect(appComponent.selectedArtObjectNumber).toBe(artObjectToSelect.objectNumber);
+    });
+
+    it('should call getDetails on rijksmuseumApiService with object number', () => {
+      expect(rijksmuseumApiService.getDetails).toHaveBeenCalledWith(artObjectToSelect.objectNumber);
+    });
+
+    it('should store artObject from response', () => {
+      expect(appComponent.selectedArtObjectDetails).toBe(getDetailsResponse.artObject);
     });
   });
 });

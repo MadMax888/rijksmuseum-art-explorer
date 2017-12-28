@@ -39,8 +39,8 @@ export class AppComponent {
       });
   }
 
-  selectArtObject(artObject) {
-    this.selectedArtObjectNumber = artObject.objectNumber;
+  selectArtObject(artObjectToSelect) {
+    this.selectedArtObjectNumber = artObjectToSelect.objectNumber;
     this.getSelectedArtObjectDetails();
   }
 
