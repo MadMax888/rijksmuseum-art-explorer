@@ -81,4 +81,29 @@ describe('AppComponent', () => {
       expect(appComponent.selectedArtObjectDetails).toBe(getDetailsResponse.artObject);
     });
   });
+
+  describe('#isSelected', () => {
+    let selectedArtObject;
+    let notSelectedArtObject;
+
+    beforeEach(() => {
+      selectedArtObject = {
+        objectNumber: 'ABC-123'
+      };
+
+      notSelectedArtObject = {
+        objectNumber: 'DDD-777'
+      };
+
+      appComponent.selectedArtObjectNumber = selectedArtObject.objectNumber;
+    });
+
+    it('should return false if passed art object is not selected', () => {
+      expect(appComponent.isSelected(notSelectedArtObject)).toBe(false);
+    });
+
+    it('should return true if passed art object is selected', () => {
+      expect(appComponent.isSelected(selectedArtObject)).toBe(true);
+    });
+  });
 });
